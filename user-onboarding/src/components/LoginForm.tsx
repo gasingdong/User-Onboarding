@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { withFormik, Form, Field, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { User } from '../App';
 
 interface LoginValues {
   name: string;
@@ -15,12 +16,11 @@ interface LoginProps {
   initialEmail?: string;
   initialPassword?: string;
   initialTos?: boolean;
+  setUsers: (users: (u: User[]) => User[]) => void;
 }
 
-interface User {
-  name: string;
-  email: string;
-  password: string;
+interface OtherProps {
+  setUsers: (users: (u: User[]) => User[]) => void;
 }
 
 const LoginForm = ({
@@ -28,15 +28,13 @@ const LoginForm = ({
   touched,
   errors,
   status,
-}: FormikProps<LoginValues>): React.ReactElement => {
-  const [users, setUsers] = useState<User[]>([]);
-  console.log('Users: ', users);
-
+  setUsers,
+}: OtherProps & FormikProps<LoginValues>): React.ReactElement => {
   useEffect((): void => {
     if (status) {
       setUsers((u): User[] => [...u, status]);
     }
-  }, [status]);
+  }, [status, setUsers]);
 
   return (
     <Form>
