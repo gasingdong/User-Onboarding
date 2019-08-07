@@ -15,7 +15,7 @@ const App: React.FC = (): React.ReactElement => {
   console.log('Users: ', users);
   return (
     <div className="App">
-      <FormikLoginForm setUsers={setUsers} />
+      <FormikLoginForm users={users} setUsers={setUsers} />
       {users.map(
         (user): React.ReactElement => (
           <UserCard user={user} key={user.email} />

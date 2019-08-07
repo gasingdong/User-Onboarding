@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { withFormik, Form, Field, FormikProps } from 'formik';
+import { withFormik, Form, Field, FormikProps, FormikErrors } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { User } from '../App';
@@ -19,10 +19,12 @@ interface LoginProps {
   initialRole?: 'frontend' | 'backend' | 'web' | 'unassigned';
   initialTos?: boolean;
   setUsers: (users: (u: User[]) => User[]) => void;
+  users: User[];
 }
 
 interface OtherProps {
   setUsers: (users: (u: User[]) => User[]) => void;
+  users: User[];
 }
 
 const LoginForm = ({
@@ -79,6 +81,21 @@ const FormikLoginForm = withFormik<LoginProps, LoginValues>({
       role: initialRole || 'unassigned',
       tos: initialTos || false,
     };
+  },
+
+  validate: (
+    values: LoginValues,
+    props: LoginProps
+  ): FormikErrors<LoginValues> => {
+    const emailExists = props.users.find(
+      (user): boolean => user.email === values.email
+    );
+    const errors: FormikErrors<LoginValues> = {};
+
+    if (emailExists) {
+      errors.email = 'This email is already taken';
+    }
+    return errors;
   },
 
   validationSchema: Yup.object().shape({
