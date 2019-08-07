@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Form from './components/Form';
+import FormikLoginForm from './components/LoginForm';
 
 const App: React.FC = (): React.ReactElement => {
   return (
     <div className="App">
-      <Form></Form>
+      <FormikLoginForm />
     </div>
   );
 };
