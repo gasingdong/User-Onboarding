@@ -8,6 +8,7 @@ interface LoginValues {
   name: string;
   email: string;
   password: string;
+  role: 'frontend' | 'backend' | 'web' | 'unassigned';
   tos: boolean;
 }
 
@@ -15,6 +16,7 @@ interface LoginProps {
   initialName?: string;
   initialEmail?: string;
   initialPassword?: string;
+  initialRole?: 'frontend' | 'backend' | 'web' | 'unassigned';
   initialTos?: boolean;
   setUsers: (users: (u: User[]) => User[]) => void;
 }
@@ -47,6 +49,12 @@ const LoginForm = ({
       )}
       <Field type="password" name="password" placeholder="Password" />
       {touched.tos && errors.tos && <p className="error">{errors.tos}</p>}
+      <Field component="select" name="role">
+        <option>Select a role</option>
+        <option value="web">Web UI Developer</option>
+        <option value="frontend">Front End Engineer</option>
+        <option value="backend">Back End Engineer</option>
+      </Field>
       <label className="checkbox-container">
         Accept Terms of Service
         <Field type="checkbox" name="tos" checked={values.tos} />
@@ -61,12 +69,14 @@ const FormikLoginForm = withFormik<LoginProps, LoginValues>({
     initialName,
     initialEmail,
     initialPassword,
+    initialRole,
     initialTos,
   }: LoginProps): LoginValues {
     return {
       name: initialName || '',
       email: initialEmail || '',
       password: initialPassword || '',
+      role: initialRole || 'unassigned',
       tos: initialTos || false,
     };
   },
