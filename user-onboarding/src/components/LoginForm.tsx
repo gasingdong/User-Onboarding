@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withFormik, Form, Field, FormikProps } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 interface LoginValues {
   name: string;
@@ -16,11 +17,27 @@ interface LoginProps {
   initialTos?: boolean;
 }
 
+interface User {
+  name: string;
+  email: string;
+  password: string;
+}
+
 const LoginForm = ({
   values,
   touched,
   errors,
+  status,
 }: FormikProps<LoginValues>): React.ReactElement => {
+  const [users, setUsers] = useState<User[]>([]);
+  console.log('Users: ', users);
+
+  useEffect((): void => {
+    if (status) {
+      setUsers((u): User[] => [...u, status]);
+    }
+  }, [status]);
+
   return (
     <Form>
       {touched.name && errors.name && <p className="error">{errors.name}</p>}
@@ -70,7 +87,12 @@ const FormikLoginForm = withFormik<LoginProps, LoginValues>({
   }),
 
   handleSubmit(values, { setStatus }): void {
-    console.log(values);
+    axios
+      .post('https://reqres.in/api/users/', values)
+      .then((res): void => {
+        setStatus(res.data);
+      })
+      .catch((err): void => console.log(err));
   },
 })(LoginForm);
 
