@@ -84,13 +84,16 @@ const FormikLoginForm = withFormik<LoginProps, LoginValues>({
       .required(),
   }),
 
-  handleSubmit(values, { setStatus }): void {
-    axios
-      .post('https://reqres.in/api/users/', values)
-      .then((res): void => {
-        setStatus(res.data);
-      })
-      .catch((err): void => console.log(err));
+  async handleSubmit(values, { setStatus }): Promise<void> {
+    try {
+      const registerUser = await axios.post(
+        'https://reqres.in/api/users/',
+        values
+      );
+      setStatus(registerUser.data);
+    } catch (err) {
+      console.log(err);
+    }
   },
 })(LoginForm);
 
