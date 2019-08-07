@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './App.scss';
 import FormikLoginForm from './components/LoginForm';
 import UserCard from './components/UserCard';
 
