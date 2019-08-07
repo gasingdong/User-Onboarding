@@ -1245,6 +1245,14 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/carbon-components-react@^7.4.0":
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/@types/carbon-components-react/-/carbon-components-react-7.4.0.tgz#9372623840a2546429b8517698f088be23ce1082"
+  integrity sha512-la3ULFarPsGnA0C+XGjOJ50jSTEbfq2KVNseoTeR06kYd9rguF/9zg7HFkB9/1kCbhPjDtntw10ICmKLXj4AnA==
+  dependencies:
+    "@types/react" "*"
+    flatpickr "4.6.1"
+
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"

@@ -3,6 +3,7 @@ import { withFormik, Form, Field, FormikProps, FormikErrors } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { User } from '../App';
+import { Button } from 'carbon-components-react';
 
 interface LoginValues {
   name: string;
@@ -41,27 +42,50 @@ const LoginForm = ({
   }, [status, setUsers]);
 
   return (
-    <Form>
-      {touched.name && errors.name && <p className="error">{errors.name}</p>}
-      <Field type="name" name="name" placeholder="Name" />
+    <Form className="register-form">
+      <div className="bx--form-item">
+        {touched.name && errors.name && <p className="error">{errors.name}</p>}
+        <Field
+          className="bx--text-input"
+          type="name"
+          name="name"
+          placeholder="Name"
+        />
+      </div>
       {touched.email && errors.email && <p className="error">{errors.email}</p>}
-      <Field type="email" name="email" placeholder="Email" />
+      <Field
+        className="bx--text-input"
+        type="email"
+        name="email"
+        placeholder="Email"
+      />
       {touched.password && errors.password && (
         <p className="error">{errors.password}</p>
       )}
-      <Field type="password" name="password" placeholder="Password" />
-      {touched.tos && errors.tos && <p className="error">{errors.tos}</p>}
-      <Field component="select" name="role">
-        <option>Select a role</option>
-        <option value="web">Web UI Developer</option>
-        <option value="frontend">Front End Engineer</option>
-        <option value="backend">Back End Engineer</option>
+      <Field
+        className="bx--text-input"
+        type="password"
+        name="password"
+        placeholder="Password"
+      />
+      <Field className="bx--text-input" component="select" name="role">
+        <option className="bx--select-option">Select a role</option>
+        <option className="bx--select-option" value="web">
+          Web UI Developer
+        </option>
+        <option className="bx--select-option" value="frontend">
+          Front End Engineer
+        </option>
+        <option className="bx--select-option" value="backend">
+          Back End Engineer
+        </option>
       </Field>
-      <label className="checkbox-container">
-        Accept Terms of Service
-        <Field type="checkbox" name="tos" checked={values.tos} />
-      </label>
-      <button type="submit">Submit</button>
+      <div className="bx--form-item bx--checkbox-wrapper">
+        {touched.tos && errors.tos && <p className="error">{errors.tos}</p>}
+        <label htmlFor="tos">Accept Terms of Service</label>
+        <Field id="tos" type="checkbox" name="tos" checked={values.tos} />
+      </div>
+      <Button type="submit">Register</Button>
     </Form>
   );
 };
@@ -105,7 +129,7 @@ const FormikLoginForm = withFormik<LoginProps, LoginValues>({
       .required('Please enter a email address'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters')
-      .required(),
+      .required('Please enter a password'),
     tos: Yup.boolean()
       .oneOf([true], 'Please accept the Terms of Service')
       .required(),
